@@ -1,8 +1,10 @@
 #ifndef UTIL_H
 #define UTIL_H
-
+#pragma once
 #include <string>
 #include <raylib.h>
+
+void HandleTooltip(Rectangle bounds, const std::string& tooltip);
 
 // Små hjälpfunktioner för GUI, t.ex. tooltip
 inline void DrawTooltip(int mouseX, int mouseY, const std::string &text)

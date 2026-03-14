@@ -7,15 +7,8 @@ void DrawGPIO(int x, int y, const std::string &label, const std::string &tooltip
     DrawCircle(x, y, 8, BLACK);
     DrawText(label.c_str(), x - 40, y - 30, 20, BLACK);
 
-    // Tooltip
-    Vector2 mousePos = GetMousePosition();
-    //Rectangle bounds = {x - 8, y - 8, 16, 16}; // cirkelområde
     Rectangle bounds = {x - 8.0f, y - 8.0f, 16.0f, 16.0f};
-
-    if (CheckCollisionPointRec(mousePos, bounds) && !tooltip.empty())
-    {
-        DrawTooltip(mousePos.x, mousePos.y, tooltip);
-    }
+    HandleTooltip(bounds,tooltip);
 }
 
 // --- LED ---
@@ -24,10 +17,7 @@ void DrawLED(int x, int y, bool on,const std::string &tooltip)
     // Fyll färg för LED-ljus
     Color ledColor = on ? RED : DARKGRAY;
 
-    // Triangel (anod)
-    //Vector2 t1 = {x, y - 20};
-    //Vector2 t2 = {x, y + 20};
-    //Vector2 t3 = {x + 40, y}; // spets mot katod
+    
     Vector2 t1 = {(float)x, (float)y - 20.0f};
     Vector2 t2 = {(float)x, (float)y + 20.0f};
     Vector2 t3 = {(float)x + 40.0f, (float)y};
@@ -43,15 +33,8 @@ void DrawLED(int x, int y, bool on,const std::string &tooltip)
         DrawLine(x + 25, y - 30, x + 40, y - 45, RED);
         DrawLine(x + 35, y - 30, x + 50, y - 45, RED);
     }
-    // Tooltip
-    Vector2 mousePos = GetMousePosition();
-    //Rectangle bounds = {x, y - 20, 40, 40};
     Rectangle bounds = {(float)x, (float)y - 20.0f, 40.0f, 40.0f};
-
-    if(CheckCollisionPointRec(mousePos, bounds) && !tooltip.empty())
-    {
-        DrawTooltip(mousePos.x, mousePos.y, tooltip);
-    }
+    HandleTooltip(bounds,tooltip);
 }
 
 // --- Resistor ---
@@ -60,15 +43,8 @@ void DrawResistor(int x, int y, const std::string &label,const std::string &tool
     DrawRectangleLines(x, y - 15, 60, 30, BLACK);
     DrawText(label.c_str(), x + 10, y - 10, 20, BLACK);
 
-    // Tooltip
-    Vector2 mousePos = GetMousePosition();
-    //Rectangle bounds = {x, y - 20, 40, 40};
     Rectangle bounds = {(float)x, (float)y - 20.0f, 40.0f, 40.0f};
-
-    if(CheckCollisionPointRec(mousePos, bounds) && !tooltip.empty())
-    {
-        DrawTooltip(mousePos.x, mousePos.y, tooltip);
-    }
+    HandleTooltip(bounds,tooltip);
 }
 
 // --- GND ---
@@ -76,16 +52,9 @@ void DrawGND(int x, int y,const std::string &tooltip)
 {
     DrawCircle(x, y, 8, BLACK);
     DrawText("GND", x - 20, y + 15, 20, BLACK);
-    // Tooltip
-    Vector2 mousePos = GetMousePosition();
-    //Rectangle bounds = {x, y - 20, 40, 40};
+
     Rectangle bounds = {(float)x, (float)y - 20.0f, 40.0f, 40.0f};
-
-    if(CheckCollisionPointRec(mousePos, bounds) && !tooltip.empty())
-    {
-        DrawTooltip(mousePos.x, mousePos.y, tooltip);
-    }
-
+    HandleTooltip(bounds,tooltip);
 }
 
 // --- Ledning/Wire ---

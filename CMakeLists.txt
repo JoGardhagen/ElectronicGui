@@ -18,7 +18,8 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/Circuits.cpp
     src/GPIOPanel.cpp
-    src/Components.cpp   
+    src/Components.cpp
+    src/Util.cpp   
 )
 
 # Länka Raylib
