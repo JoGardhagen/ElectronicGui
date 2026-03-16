@@ -17,6 +17,11 @@ void DrawCircuit1_Basic(bool active);
 void DrawCircuit1_Mid(bool ledState);
 void DrawCircuit1_Full();
 
+void DrawCircuit2_Basic();
+void DrawCircuit2_Mid(bool ledOn);
+void DrawCircuit2_Full(bool ledOn);
+
+void DrawCircuit3_Basic(float potValue);
 
 
 #endif
