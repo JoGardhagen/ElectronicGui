@@ -5,6 +5,7 @@
 #include "Components.h"
 #include "Button.h"
 
+
 void DrawCircuit1_Basic(bool active)
 {   
 
@@ -217,33 +218,42 @@ void DrawCircuit3_Basic(float potValue)
 {
     DrawText("Circuit 3 - Potentiometer Basic", 250, 50, 30, BLACK);
 
-    int y = 250;
+    int y = 200;
     int startX = 120;
 
     // --- 3.3V ---
-    DrawGPIO(startX, y, "GPIO 3.3V", "Pin 1");
+    DrawGPIO(startX, y, "GPIO 3.3V", "Pin 3");
 
-    // --- Ledning till potentiometer ---
-    int potX = startX + 80;
-    DrawWire(startX + 8, y, potX, y);
+    // --- Pot ---
+    int potX = startX + 100;
+    PotPins pot = DrawPot(potX, y, potValue, "Pot", "10-1K OHM");
 
-    // --- Potentiometer ---
-    DrawRectangle(potX - 10, y - 10, 20, 20, GRAY);
-    DrawText("Pot", potX - 15, y - 30, 20, BLACK);
+    // --- VCC → pin1 ---
+    DrawWire(startX + 8, y, pot.pin1.x, pot.pin1.y);
 
-    // --- Ledning till LED ---
-    int ledX = potX + 80;
-    DrawWire(potX + 10, y, ledX, y);
+    // --- pin2 → GND ---
+    DrawWire(pot.pin2.x, pot.pin2.y, pot.pin2.x + 100, pot.pin2.y);
+    DrawGND(pot.pin2.x + 100, pot.pin2.y, "GND");
 
-    // --- LED ---
-    DrawLED(ledX, y, potValue > 0.3f, "LED");
+    int yForLed = pot.pin3.y+100;
+    int xForLed = pot.pin3.x+100;
 
-    // --- Till GND ---
-    DrawWire(ledX + 30, y, ledX + 50, y);
-    DrawGND(ledX + 50, y, "GND");
+    DrawWire(pot.pin3.x,pot.pin3.y+50,pot.pin3.x,yForLed);
+
+    DrawWire(pot.pin3.x,yForLed,xForLed,yForLed);
+
+    //bool ledOn = potValue >= 0.7f;  // LED tänds när potValue > 0.3
+    
+    DrawLEDCustom(xForLed, yForLed, potValue, "LED");
+    //bool ledOn = potValue > 0.7f; // Tröskel för full röd
+    //DrawLEDFullRed(xForLed, yForLed, ledOn, "LED");
+
+    //DrawLED(xForLed,yForLed,false,"Led");
+    DrawWire(xForLed+40,yForLed,xForLed+100,yForLed);
+    DrawGND(xForLed+100,yForLed,"GND");
+
 }
-
-void DrawCircuit(int circuit, int level,bool active,bool ledState)
+void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue)
 {
     switch(circuit)
     {
@@ -262,7 +272,7 @@ void DrawCircuit(int circuit, int level,bool active,bool ledState)
             break;
 
         case 2:
-            if(level==0) DrawCircuit3_Basic(5.0f);
+            if(level==0) DrawCircuit3_Basic(potValue);
             break;
 
         case 3:

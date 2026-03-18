@@ -6,6 +6,7 @@
 #include <string>
 
 //void DrawCircuit1();
+static float potValue = 0.1f; // startvärde för Circuit 3
 
 int main(){
     bool circuitActive = false;
@@ -159,10 +160,39 @@ int main(){
                     rcLedOn = cap2Voltage > 0.6f;
                 }
             }
+            if(currentPage == 2 && circuitLevel == 0)
+                {
+                    int sliderX = 600;
+                    int sliderY = 150;
+                    int sliderWidth = 200;
+                    int sliderHeight = 20;
+                
+                    // Bakgrund
+                    DrawRectangle(sliderX, sliderY, sliderWidth, sliderHeight, GRAY);
+                
+                    // Handle
+                    int handleX = sliderX + (int)(potValue * sliderWidth) - 5;
+                    DrawRectangle(handleX, sliderY - 5, 10, sliderHeight + 10, BLUE);
+                
+                    // Interaktion
+                    if(IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+                    {
+                        Vector2 mousePos = GetMousePosition();
+                        if(mousePos.x >= sliderX && mousePos.x <= sliderX + sliderWidth &&
+                           mousePos.y >= sliderY - 5 && mousePos.y <= sliderY + sliderHeight + 5)
+                        {
+                            potValue = (mousePos.x - sliderX) / (float)sliderWidth;
+                            if(potValue < 0.0f) potValue = 0.0f;
+                            if(potValue > 1.0f) potValue = 1.0f;
+                        }
+                    }
+                
+                    DrawText(TextFormat("Pot: %.2f", potValue), sliderX, sliderY - 30, 20, BLACK);
+                }
 
         // rita kretsen med korrekt LED-status
         bool ledToDraw = (currentPage == 1 && circuitLevel >= 1) ? rcLedOn : ledState;
-        DrawCircuit(currentPage, circuitLevel, circuitActive, ledToDraw);
+        DrawCircuit(currentPage, circuitLevel, circuitActive, ledToDraw,potValue);
 
             //DrawCircuit(currentPage,circuitLevel,circuitActive,ledState);
             basicBtn.Draw();

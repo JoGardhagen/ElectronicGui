@@ -8,7 +8,7 @@
 //#include "Util.h"
 
 // Prototyper för alla kretsar
-void DrawCircuit(int circuit, int level,bool active,bool ledState);
+void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue);
 
 void DrawGPIOPanel(int startX, int startY);
 
