@@ -17,9 +17,9 @@ FetchContent_MakeAvailable(raylib)
 add_executable(${PROJECT_NAME} 
     src/main.cpp
     src/Circuits.cpp
-    src/GPIOPanel.cpp
+    src/Panels/GPIOPanel.cpp
     src/Components.cpp
-    src/Util.cpp   
+    src/Utilities/Util.cpp   
 )
 
 # Länka Raylib

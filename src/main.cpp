@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include "Button.h"
 #include "Circuits.h"
-#include "GPIOPanel.h"
+#include "Panels/GPIOPanel.h"
 #include <vector>
 #include <string>
 

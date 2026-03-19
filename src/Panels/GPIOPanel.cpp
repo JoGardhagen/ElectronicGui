@@ -1,5 +1,5 @@
 #include "GPIOPanel.h"
-#include "Util.h"
+#include "../Utilities/Util.h"
 
 // Skapa arrayen med alla 40 pins
 PinInfo pins[40] = {

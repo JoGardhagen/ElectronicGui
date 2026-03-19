@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include "Circuits.h"
 #include <string>
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "Components.h"
 #include "Button.h"
 
@@ -123,7 +123,7 @@ void DrawCircuit2_Basic(){
     // resistor
     int resistorX = startX + 80;
     DrawWire(startX + 8, y, resistorX, y); // ledning 3.3V -> resistor
-    DrawResistor(resistorX, y, "10k", "10k Ohm resistor");
+    DrawResistor(resistorX, y, "R10k", "10k Ohm resistor");
 
     // nod för GPIO17
     int gpioX = resistorX + 100;
@@ -154,7 +154,7 @@ void DrawCircuit2_Mid(bool ledOn)
     DrawWire(120, y, 220, y);
 
     // Resistor
-    DrawResistor(220, y, "10k", "10k Ohm resistor");
+    DrawResistor(220, y, "R10k", "10k Ohm resistor");
 
     // Ledning till kondensator
     DrawWire(280, y, 320, y);
@@ -183,7 +183,7 @@ void DrawCircuit2_Full(bool ledOn)
     // --- Resistor ---
     int resistorX = startX + 80;
     DrawWire(startX + 8, y, resistorX, y); // ledning 3.3V → resistor
-    DrawResistor(resistorX, y, "10k", "10k Ohm resistor");
+    DrawResistor(resistorX, y, "R10k", "10k Ohm resistor");
 
     // --- Kondensator1 ---
     int cap1X = resistorX + 100;
