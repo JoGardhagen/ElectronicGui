@@ -4,6 +4,7 @@
 #include "Utilities/Util.h"
 #include "Components.h"
 #include "Button.h"
+#include "Components/GPIOPin.h"
 
 
 void DrawCircuit1_Basic(bool active)
@@ -14,7 +15,8 @@ void DrawCircuit1_Basic(bool active)
     int y = 250;
 
     // Startpunkt: GPIO +V
-    DrawGPIO(120,y,"GPIO +V","Pin 1 eller 17");
+    //DrawGPIO(120,y,"GPIO +V","Pin 1 eller 17");
+    DrawGPIOPin(120,y,"GPIO +V","Pin 1 eller 17");
 
     // Ledning till resistor
     DrawWire(128, y, 200, y);
@@ -32,7 +34,8 @@ void DrawCircuit1_Basic(bool active)
     DrawWire(360, y, 430, y);
 
     // GND
-    DrawGND(430, y,"GND pin 6,9,14,20,25,30,34,39");
+    //DrawGND(430, y,"GND pin 6,9,14,20,25,30,34,39");
+    DrawGNDPin(430, y,"GND pin 6,9,14,20,25,30,34,39");
 }
 
 void DrawCircuit1_Mid(bool ledOn)
@@ -41,7 +44,8 @@ void DrawCircuit1_Mid(bool ledOn)
 
     int y = 250;
 
-    DrawGPIO(120,y,"GPIO +V","Pin 1 eller 17");
+    //DrawGPIO(120,y,"GPIO +V","Pin 1 eller 17");
+    DrawGPIOPin(120,y,"GPIO +V","Pin 1 eller 17");
 
     DrawWire(128,y,200,y);
 
@@ -53,7 +57,9 @@ void DrawCircuit1_Mid(bool ledOn)
 
     DrawWire(360,y,430,y);
 
-    DrawGND(430,y,"GND pins");
+    //DrawGND(430,y,"GND pins");
+    DrawGNDPin(430,y,"GND pins");
+
 }
 
 void DrawCircuit1_Full(/*bool led1, bool led2, bool led3, bool led4*/)
@@ -74,7 +80,8 @@ void DrawCircuit1_Full(/*bool led1, bool led2, bool led3, bool led4*/)
         //bool ledOn = (i == 0 ? led1 : i == 1 ? led2 : i == 2 ? led3 : led4);
 
         // GPIO
-        DrawGPIO(startX - 120, y, "GPIO " + std::to_string(i+1), "Pin GPIO " + std::to_string(i+1));
+        //DrawGPIO(startX - 120, y, "GPIO " + std::to_string(i+1), "Pin GPIO " + std::to_string(i+1));
+        DrawGPIOPin(startX -120,y,"GPIO +V"+ std::to_string(i+1), "Pin GPIO " + std::to_string(i+1));
 
         // Ledning GPIO → resistor
         DrawWire(startX - 112, y, startX - 40, y);
@@ -94,7 +101,8 @@ void DrawCircuit1_Full(/*bool led1, bool led2, bool led3, bool led4*/)
         DrawWire(horizEndX, y, horizEndX, gndY);     // vertikal
 
         // GND längst ner
-        DrawGND(horizEndX, gndY, "GND");
+        //DrawGND(horizEndX, gndY, "GND");
+        DrawGNDPin(horizEndX, gndY, "GND");
 
         // --- Button för LED ---
         if(!buttons[i]) // skapa knappen första gången
@@ -118,7 +126,8 @@ void DrawCircuit2_Basic(){
     int startX = 120;     // start från 3.3V
 
     // 3.3V
-    DrawGPIO(startX, y, "GPIO 3.3V", "Pin 1");
+    //DrawGPIO(startX, y, "GPIO 3.3V", "Pin 1");
+    DrawGPIOPin(startX, y, "GPIO 3.3V", "Pin 1");
 
     // resistor
     int resistorX = startX + 80;
@@ -128,7 +137,8 @@ void DrawCircuit2_Basic(){
     // nod för GPIO17
     int gpioX = resistorX + 100;
     DrawWire(resistorX + 60, y, gpioX+10, y); // ledning resistor -> GPIO
-    DrawGPIO(gpioX+10, y, "GPIO17", "Pin 11");
+    //DrawGPIO(gpioX+10, y, "GPIO17", "Pin 11");
+    DrawGPIOPin(gpioX+10, y, "GPIO17", "Pin 11");
 
     // ledning till kondensator
     int capX = gpioX + 80;
@@ -139,7 +149,8 @@ void DrawCircuit2_Basic(){
 
     // ledning från kondensator ner till GND
     DrawWire(capX + 15, y, capX + 40, y );
-    DrawGND(capX + 50, y , "GND");
+    //DrawGND(capX + 50, y , "GND");
+    DrawGNDPin(capX + 50, y , "GND");
 }
 void DrawCircuit2_Mid(bool ledOn)
 {
@@ -148,7 +159,8 @@ void DrawCircuit2_Mid(bool ledOn)
     int y = 250;
 
     // 3.3V
-    DrawGPIO(120, y, "GPIO 3.3V", "Pin 1");
+    //DrawGPIO(120, y, "GPIO 3.3V", "Pin 1");
+    DrawGPIOPin(120, y, "GPIO 3.3V", "Pin 1");
 
     // Ledning till resistor
     DrawWire(120, y, 220, y);
@@ -168,7 +180,8 @@ void DrawCircuit2_Mid(bool ledOn)
 
     // Ledning till GND
     DrawWire(430, y , 470, y);
-    DrawGND(470, y , "GND");
+    //DrawGND(470, y , "GND");
+    DrawGNDPin(470, y , "GND");
 }
 void DrawCircuit2_Full(bool ledOn)
 {
@@ -178,7 +191,8 @@ void DrawCircuit2_Full(bool ledOn)
     int startX = 120;  // Start från 3.3V
 
     // --- 3.3V ---
-    DrawGPIO(startX, y, "GPIO 3.3V", "Pin 1");
+    //DrawGPIO(startX, y, "GPIO 3.3V", "Pin 1");
+    DrawGPIOPin(startX, y, "GPIO 3.3V", "Pin 1");
 
     // --- Resistor ---
     int resistorX = startX + 80;
@@ -195,7 +209,8 @@ void DrawCircuit2_Full(bool ledOn)
     //DrawCircle(nodeX, y, 5, BLACK); // nod
     //DrawText("GPIO17", nodeX - 20, y - 30, 20, BLACK);
     DrawWire(cap1X+15,y,nodeX,y);
-    DrawGPIO(nodeX, y, "GPIO17", "Pin 11");
+    //DrawGPIO(nodeX, y, "GPIO17", "Pin 11");
+    DrawGPIOPin(nodeX, y, "GPIO17", "Pin 11");
 
     // Ledning till Kondensator2
     int cap2X = nodeX + 60;
@@ -210,7 +225,8 @@ void DrawCircuit2_Full(bool ledOn)
     // --- Till GND ---
     int gndX = ledX + 70;
     DrawWire(ledX + 35, y, gndX, y);
-    DrawGND(gndX, y, "GND");
+    //DrawGND(gndX, y, "GND");
+    DrawGNDPin(gndX, y, "GND");
 
     //DrawText(TextFormat("GPIO17: %.2f V", cap1Voltage * 3.3f), 300, 200, 20, DARKGRAY);
 }
@@ -222,7 +238,8 @@ void DrawCircuit3_Basic(float potValue)
     int startX = 120;
 
     // --- 3.3V ---
-    DrawGPIO(startX, y, "GPIO 3.3V", "Pin 3");
+    //DrawGPIO(startX, y, "GPIO 3.3V", "Pin 3");
+    DrawGPIOPin(startX, y, "GPIO 3.3V", "Pin 3");
 
     // --- Pot ---
     int potX = startX + 100;
@@ -233,7 +250,8 @@ void DrawCircuit3_Basic(float potValue)
 
     // --- pin2 → GND ---
     DrawWire(pot.pin2.x, pot.pin2.y, pot.pin2.x + 100, pot.pin2.y);
-    DrawGND(pot.pin2.x + 100, pot.pin2.y, "GND");
+    //DrawGND(pot.pin2.x + 100, pot.pin2.y, "GND");
+    DrawGNDPin(pot.pin2.x + 100, pot.pin2.y, "GND");
 
     int yForLed = pot.pin3.y+100;
     int xForLed = pot.pin3.x+100;
@@ -250,7 +268,8 @@ void DrawCircuit3_Basic(float potValue)
 
     //DrawLED(xForLed,yForLed,false,"Led");
     DrawWire(xForLed+40,yForLed,xForLed+100,yForLed);
-    DrawGND(xForLed+100,yForLed,"GND");
+    //DrawGND(xForLed+100,yForLed,"GND");
+    DrawGNDPin(xForLed+100,yForLed,"GND");
 
 }
 void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue)

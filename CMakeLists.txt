@@ -20,6 +20,7 @@ add_executable(${PROJECT_NAME}
     src/Panels/GPIOPanel.cpp
     src/Components.cpp
     src/Utilities/Util.cpp   
+    src/Components/GPIOPin.cpp
 )
 
 # Länka Raylib

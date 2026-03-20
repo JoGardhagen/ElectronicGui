@@ -3,14 +3,14 @@
 
 
 // --- GPIO ---
-void DrawGPIO(int x, int y, const std::string &label, const std::string &tooltip)
+/*void DrawGPIO(int x, int y, const std::string &label, const std::string &tooltip)
 {
     DrawCircle(x, y, 8, BLACK);
     DrawText(label.c_str(), x - 40, y - 30, 20, BLACK);
 
     Rectangle bounds = {x - 8.0f, y - 8.0f, 16.0f, 16.0f};
     HandleTooltip(bounds,tooltip);
-}
+}*/
 
 // --- LED ---
 void DrawLED(int x, int y, bool on,const std::string &tooltip)
@@ -145,14 +145,14 @@ void DrawCapacitor(int x, int y, const std::string &label,const std::string &too
 }
 
 // --- GND ---
-void DrawGND(int x, int y,const std::string &tooltip)
+/*void DrawGND(int x, int y,const std::string &tooltip)
 {
     DrawCircle(x, y, 8, BLACK);
     DrawText("GND", x - 20, y + 15, 20, BLACK);
 
     Rectangle bounds = {(float)x, (float)y - 20.0f, 40.0f, 40.0f};
     HandleTooltip(bounds,tooltip);
-}
+}*/
 
 // --- Ledning/Wire ---
 void DrawWire(int x1, int y1, int x2, int y2, bool arrow)
