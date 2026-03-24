@@ -1,6 +1,6 @@
 #include <raylib.h>
 #include "Button.h"
-#include "Circuits.h"
+#include "Circuits/Circuits.h"
 #include "Panels/GPIOPanel.h"
 #include <vector>
 #include <string>
@@ -108,7 +108,7 @@ int main(){
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
-        DrawText("El-Lära GUI", 20, 20, 30, BLACK);
+        //DrawText("El-Lära GUI", 20, 20, 30, BLACK);
         togglePanelBtn.Draw();
         
         if(currentPage == -1)
@@ -160,7 +160,8 @@ int main(){
                     rcLedOn = cap2Voltage > 0.6f;
                 }
             }
-            if(currentPage == 2 && circuitLevel == 0)
+            //if(currentPage == 2 && circuitLevel == 0)
+            if(currentPage == 2)
                 {
                     int sliderX = 600;
                     int sliderY = 150;

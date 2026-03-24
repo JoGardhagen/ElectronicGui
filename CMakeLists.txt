@@ -16,11 +16,18 @@ FetchContent_MakeAvailable(raylib)
 # Lägg till din källa
 add_executable(${PROJECT_NAME} 
     src/main.cpp
-    src/Circuits.cpp
+    src/Circuits/Circuits.cpp
     src/Panels/GPIOPanel.cpp
-    src/Components.cpp
+    #src/Components.cpp
     src/Utilities/Util.cpp   
     src/Components/GPIOPin.cpp
+    src/Components/Resistor.cpp
+    src/Components/LightEmittingDiode.cpp
+    src/Components/Capacitor.cpp
+    src/Components/Wire.cpp
+    src/Circuits/Circuit1.cpp
+    src/Circuits/Circuit2.cpp
+    src/Circuits/Circuit3.cpp
 )
 
 # Länka Raylib
