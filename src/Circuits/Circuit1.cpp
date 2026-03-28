@@ -4,9 +4,10 @@
 #include "../Components/LightEmittingDiode.h"
 #include "../Components/Wire.h"
 #include "../Button.h"
+#include "../Components/GPIO/IGPIO.h"
 
 
-void DrawCircuit1_Basic(bool active)
+void DrawCircuit1_Basic(bool active,IGPIO* gpio)
 {   
 
     DrawText("Circuit 1 - BASIC", 20, 20, 30, BLACK);
@@ -28,6 +29,11 @@ void DrawCircuit1_Basic(bool active)
 
     // LED
     DrawLED(320, y, active,"Lysdiod");
+
+    // Koppla mock / GPIO
+    if (gpio) {
+        gpio->setLED(active);  // Tänder LED på Pi eller loggar i DummyGPIO
+    }
 
     // Ledning till GND
     DrawWire(360, y, 430, y);

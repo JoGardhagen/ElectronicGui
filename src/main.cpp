@@ -2,13 +2,34 @@
 #include "Button.h"
 #include "Circuits/Circuits.h"
 #include "Panels/GPIOPanel.h"
+#include "Components/GPIO/IGPIO.h"
+
+
+#if defined(__linux__)
+    #include "Components/GPIO/RaspberryGPIO.h"
+#else
+    #include "Components/GPIO/DummyGPIO.h"
+#endif
+
+
+
+
 #include <vector>
 #include <string>
+
 
 //void DrawCircuit1();
 static float potValue = 0.1f; // startvärde för Circuit 3
 
 int main(){
+    IGPIO* gpio = nullptr;
+    #if defined(__linux__)
+        gpio = new RaspberryGPIO();
+    #else
+        gpio = new DummyGPIO();
+    #endif
+
+   
     bool circuitActive = false;
     bool ledState = false;
     float RC1 = 10'000 * 10e-6; // 10k * 10uF = 0.1 s
@@ -193,7 +214,7 @@ int main(){
 
         // rita kretsen med korrekt LED-status
         bool ledToDraw = (currentPage == 1 && circuitLevel >= 1) ? rcLedOn : ledState;
-        DrawCircuit(currentPage, circuitLevel, circuitActive, ledToDraw,potValue);
+        DrawCircuit(currentPage, circuitLevel, circuitActive, ledToDraw,potValue,gpio);
 
             //DrawCircuit(currentPage,circuitLevel,circuitActive,ledState);
             basicBtn.Draw();

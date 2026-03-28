@@ -1,7 +1,7 @@
 #include "Circuits.h"
 
 // forward declarations
-void DrawCircuit1_Basic(bool);
+void DrawCircuit1_Basic(bool ,IGPIO* gpio);
 void DrawCircuit1_Mid(bool);
 void DrawCircuit1_Full();
 
@@ -15,13 +15,13 @@ void DrawCirciut3_Full(float potValue);
 
 
 
-void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue)
+void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue,IGPIO* gpio)
 {
     switch(circuit)
     {
         case 0:
 
-            if(level == 0) DrawCircuit1_Basic(active);
+            if(level == 0) DrawCircuit1_Basic(active, gpio);
             if(level == 1) DrawCircuit1_Mid(ledState);
             if(level == 2) DrawCircuit1_Full();
             break;
