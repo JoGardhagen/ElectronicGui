@@ -28,6 +28,7 @@ add_executable(${PROJECT_NAME}
     src/Circuits/Circuit1.cpp
     src/Circuits/Circuit2.cpp
     src/Circuits/Circuit3.cpp
+    src/Appstate
 )
 
 # Länka Raylib

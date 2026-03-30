@@ -5,6 +5,7 @@
 #include "../Components/Wire.h"
 #include "../Button.h"
 #include "../Components/GPIO/IGPIO.h"
+#include "../AppState.h"
 
 
 void DrawCircuit1_Basic(bool active,IGPIO* gpio)
@@ -43,27 +44,20 @@ void DrawCircuit1_Basic(bool active,IGPIO* gpio)
     DrawGNDPin(430, y,"GND pin 6,9,14,20,25,30,34,39");
 }
 
-void DrawCircuit1_Mid(bool ledOn)
+void DrawCircuit1_Mid(AppState& state)
 {
     DrawText("Circuit 1 - MID",20,20,30,BLACK);
-
     int y = 250;
-
-    //DrawGPIO(120,y,"GPIO +V","Pin 1 eller 17");
     DrawGPIOPin(120,y,"GPIO +V","Pin 1 eller 17");
-
     DrawWire(128,y,200,y);
-
     DrawResistor(200,y,"R330","330 OHM resistor");
-
     DrawWire(260,y,320,y);
-
-    DrawLED(320,y,ledOn,"Lysdiod");
-
+    DrawLED(320,y,state.rcLedOn,"Lysdiod");
     DrawWire(360,y,430,y);
-
-    //DrawGND(430,y,"GND pins");
     DrawGNDPin(430,y,"GND pins");
+
+    if(state.circuitActive)
+        ; // GPIO-output: gpio->setLED(0, state.rcLedOn);
 
 }
 
