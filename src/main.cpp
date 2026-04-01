@@ -28,21 +28,40 @@ IGPIO* CreateGPIO()
     #endif
 }
 
+void Update(AppState& state,float dt){
+    switch (state.currentPage)
+    {
+        case 1: state.UpdateCircuit(dt);break;
+        case 2: state.HandlePotSlider();break;
+    }
+}
+void DrawUI(AppState& state,Button& basicBtn,Button& midbtn,Button& fullbtn,Button& activate,Button& ledBtn){
+    DrawText(TextFormat("Level: %i",state.circuitLevel),20,60,20,GRAY);
+    basicBtn.Draw();
+    midbtn.Draw();
+    fullbtn.Draw();
+    activate.Draw();
 
+    basicBtn.CheckClick();
+    midbtn.CheckClick();
+    fullbtn.CheckClick();
+    activate.CheckClick();
 
-static float potValue = 0.1f; // startvärde för Circuit 3
+    if(state.currentPage == 0 && state.circuitLevel == 1){
+        ledBtn.Draw();
+        ledBtn.CheckClick();
+    }
+}
 
 int main(){
     IGPIO* gpio = CreateGPIO();
     AppState state;
-    state.circuitActive = false;
-    state.ledState = false;
     state.currentPage = -1;
-    state.circuitLevel = 0;
-    state.cap1Voltage = 0.0f;
-    state.cap2Voltage = 0.0f;
-    state.charging = true;
-    state.potValue = 0.1f;
+    //state.circuitLevel = 0;
+    //state.cap1Voltage = 0.0f;
+    //state.cap2Voltage = 0.0f;
+    //state.charging = true;
+    //state.potValue = 0.1f;
 
     float dt = 1.0f / 60;
 
@@ -61,10 +80,8 @@ int main(){
     Button fullBtn(500,500,100,40,"Full");
     Button activate(600,50,200,40,"Activate Circiut");
     activate.SetOnClick([&](){
-    //circuitActive = !circuitActive;
     state.circuitActive = !state.circuitActive;
         if(!state.circuitActive)
-            //if(currentPage == 1) capacitorVoltage = 0.0f; // Circuit 2
             state.ledState = false;
     });
 
@@ -95,9 +112,6 @@ int main(){
     int btnHeight = 40;
     int btnY = screenHeight - btnHeight - 10;
     
-    
-    //int circuitLevel = 0;
-    
     basicBtn.SetOnClick([&](){ 
         state.circuitLevel = 0;
         state.circuitActive = false;
@@ -123,15 +137,16 @@ int main(){
     {
         int x = spacing + i * (btnWidth + spacing);
         buttons.emplace_back(x, btnY, btnWidth, btnHeight, "K" + std::to_string(i + 1));
-        //buttons[i].SetOnClick([&state.currentPage,&state.circuitLevel,i]{
+
+            buttons[i].SetColor(GREEN);
+            buttons[i].SetColorHover(RED);
+
         buttons[i].SetOnClick([&state,i]{
             state.currentPage = i;
             state.circuitLevel = 0;
         });
     }
-
-    //bool rcLedOn = false;   
-
+   
     while (!WindowShouldClose()){
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -143,35 +158,15 @@ int main(){
         {   
             DrawText("Välj en krets längst ner", 200, 250, 25, GRAY);
         }else{   
-            DrawText(TextFormat("Level: %i", state.circuitLevel),20,60,20,GRAY);
+            Update(state,dt);
+        
+            bool ledToDraw = (state.currentPage == 1 && state.circuitLevel >= 1) ? state.rcLedOn : state.ledState;
+            DrawCircuit(state.currentPage, state.circuitLevel, state.circuitActive, ledToDraw,state.potValue,gpio,state);
+            DrawUI(state,basicBtn,midBtn,fullBtn,activate,ledBtn);
 
-            if(state.currentPage == 1) state.UpdateCircuit(dt); 
-
-            if(state.currentPage == 2) state.HandlePotSlider();
-            
-        // rita kretsen med korrekt LED-status
-        bool ledToDraw = (state.currentPage == 1 && state.circuitLevel >= 1) ? state.rcLedOn : state.ledState;
-        DrawCircuit(state.currentPage, state.circuitLevel, state.circuitActive, ledToDraw,state.potValue,gpio,state);
-
-            basicBtn.Draw();
-            midBtn.Draw();
-            fullBtn.Draw();
-            activate.Draw();
-
-            basicBtn.CheckClick();
-            midBtn.CheckClick();
-            fullBtn.CheckClick();
-            activate.CheckClick();
-            if(state.currentPage == 0 && state.circuitLevel == 1) // Circuit 1 MID
-            {
-                ledBtn.Draw();
-                ledBtn.CheckClick();
-            }
         }
 
         for(auto &btn: buttons){
-            btn.SetColor(GREEN);
-            btn.SetColorHover(RED);
             btn.Draw();
             btn.CheckClick();
         }
