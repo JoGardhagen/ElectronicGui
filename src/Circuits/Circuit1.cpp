@@ -8,6 +8,8 @@
 #include "../AppState.h"
 #include "../UI/Dropdown.h"
 
+static bool ledState[4] = {false, false, false, false};
+
 struct PinItem {
     std::string label;
     int pin;
@@ -103,60 +105,60 @@ void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
 
 }
 
-void DrawCircuit1_Full(/*bool led1, bool led2, bool led3, bool led4*/)
+void DrawCircuit1_Full(AppState& state, IGPIO* gpio)
 {
-   DrawText("Circuit 1 - FULL", 20, 20, 30, BLACK);
+    DrawText("Circuit 1 - FULL", 20, 20, 30, BLACK);
 
-    int startX = 200;   // X-position för resistor
-    int ledSpacingY = 80; // Vertikal avstånd mellan LEDs
-    int gndY = 400;       // Y-position för GND
-    int wireForward = 160; // Hur långt ledningen går horisontellt innan den går ner
+    int startX = 200;
+    int ledSpacingY = 80;
+    int gndY = 400;
+    int wireForward = 160;
 
-    static bool ledState[4] = {false, false, false, false}; // LED-status
     static Button* buttons[4] = {nullptr,nullptr,nullptr,nullptr};
+    static Dropdown* gpioDropdowns[4] = {nullptr,nullptr,nullptr,nullptr};
 
     for(int i = 0; i < 4; i++)
     {
-        int y = 150 + i * ledSpacingY;  
-        //bool ledOn = (i == 0 ? led1 : i == 1 ? led2 : i == 2 ? led3 : led4);
+        int y = 150 + i * ledSpacingY;
 
-        // GPIO
-        //DrawGPIO(startX - 120, y, "GPIO " + std::to_string(i+1), "Pin GPIO " + std::to_string(i+1));
-        DrawGPIOPin(startX -120,y,"GPIO +V"+ std::to_string(i+1), "Pin GPIO " + std::to_string(i+1));
-
-        // Ledning GPIO → resistor
+        DrawGPIOPin(startX - 120, y, "GPIO +V" + std::to_string(i+1), "Pin GPIO");
         DrawWire(startX - 112, y, startX - 40, y);
-
-        // Resistor
         DrawResistor(startX - 40, y, "R330", "330 Ohm resistor");
-
-        // Ledning resistor → LED
         DrawWire(startX+20, y, startX + 40, y);
-
-        // LED
         DrawLED(startX + 40, y, ledState[i], "LED " + std::to_string(i+1));
 
-        // LED → horisontell fram → vertikal ner till GND
         int horizEndX = startX + 40 + wireForward;
-        DrawWire(startX + 75, y, horizEndX, y);      // horisontellvvs
-        DrawWire(horizEndX, y, horizEndX, gndY);     // vertikal
-
-        // GND längst ner
-        //DrawGND(horizEndX, gndY, "GND");
+        DrawWire(startX + 75, y, horizEndX, y);
+        DrawWire(horizEndX, y, horizEndX, gndY);
         DrawGNDPin(horizEndX, gndY, "GND");
 
-        // --- Button för LED ---
-        if(!buttons[i]) // skapa knappen första gången
-        {
-            buttons[i] = new Button(startX + 300, y - 15, 75, 30, "LED " + std::to_string(i+1));
-            buttons[i]->SetColor((BLUE));
-            buttons[i]->SetColorHover((PINK));
-            buttons[i]->SetOnClick([i]() { ledState[i] = !ledState[i]; });
+        // Dropdown
+        if(!gpioDropdowns[i]) {
+            std::vector<std::string> labels;
+            for(auto& p : controllablePins) labels.push_back(p.label);
+            gpioDropdowns[i] = new Dropdown(startX + 230, y - 15, 100, 30, labels);
+        }
+
+        gpioDropdowns[i]->Draw();
+        gpioDropdowns[i]->CheckClick();
+
+        int selectedIndex = gpioDropdowns[i]->GetSelectedIndex();
+        int selectedPin = controllablePins[selectedIndex].pin;
+
+        // Button
+        if(!buttons[i]) {
+            buttons[i] = new Button(startX + 360, y - 15, 120, 30, "Toggle LED");
+            buttons[i]->SetColor(BLUE);
+            buttons[i]->SetColorHover(PINK);
+            buttons[i]->SetOnClick([i]() { ledState[i] = !ledState[i]; }); // FIX
         }
 
         buttons[i]->Draw();
         buttons[i]->CheckClick();
 
-        
+        // GPIO
+        if(gpio) {
+            gpio->setLEDPin(selectedPin, ledState[i]);
+        }
     }
 }

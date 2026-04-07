@@ -3,7 +3,7 @@
 // forward declarations
 void DrawCircuit1_Basic(bool ,IGPIO* gpio);
 void DrawCircuit1_Mid(AppState& state,IGPIO* gpio);
-void DrawCircuit1_Full();
+void DrawCircuit1_Full(AppState& state, IGPIO* gpio);
 
 void DrawCircuit2_Basic();
 void DrawCircuit2_Mid(bool ledOn);
@@ -25,7 +25,7 @@ void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue
 
             if(level == 0) DrawCircuit1_Basic(active, gpio);
             if(level == 1) DrawCircuit1_Mid(state,gpio);
-            if(level == 2) DrawCircuit1_Full();
+            if(level == 2) DrawCircuit1_Full(state,gpio);
             break;
 
         case 1:
