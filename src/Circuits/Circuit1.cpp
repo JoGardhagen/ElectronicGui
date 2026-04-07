@@ -6,7 +6,22 @@
 #include "../Button.h"
 #include "../Components/GPIO/IGPIO.h"
 #include "../AppState.h"
+#include "../UI/Dropdown.h"
 
+struct PinItem {
+    std::string label;
+    int pin;
+};
+
+// Endast GPIO som kan styras
+std::vector<PinItem> controllablePins = {
+    {"GPIO_2", 3}, {"GPIO_3", 5}, {"GPIO_4", 7}, {"GPIO_14", 8}, {"GPIO_15", 10},
+    {"GPIO_17", 11}, {"GPIO_18", 12}, {"GPIO_27", 13}, {"GPIO_22", 15}, {"GPIO_23", 16},
+    {"GPIO_24", 18}, {"GPIO_10", 19}, {"GPIO_9", 21}, {"GPIO_25", 22}, {"GPIO_11", 23},
+    {"GPIO_8", 24}, {"GPIO_7", 26}, {"GPIO5", 29}, {"GPIO_6", 31}, {"GPIO_12", 32},
+    {"GPIO_13", 33}, {"GPIO_19", 35}, {"GPIO_16", 36}, {"GPIO_26", 37}, {"GPIO_20", 38},
+    {"GPIO_21", 40}
+};
 
 void DrawCircuit1_Basic(bool active,IGPIO* gpio)
 {   
@@ -44,11 +59,11 @@ void DrawCircuit1_Basic(bool active,IGPIO* gpio)
     DrawGNDPin(430, y,"GND pin 6,9,14,20,25,30,34,39");
 }
 
-void DrawCircuit1_Mid(AppState& state)
+void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
 {
     DrawText("Circuit 1 - MID",20,20,30,BLACK);
     int y = 250;
-    DrawGPIOPin(120,y,"GPIO +V","Pin 1 eller 17");
+    DrawGPIOPin(120,y,"GPIO ","Pin 1 eller 17");
     DrawWire(128,y,200,y);
     DrawResistor(200,y,"R330","330 OHM resistor");
     DrawWire(260,y,320,y);
@@ -56,8 +71,35 @@ void DrawCircuit1_Mid(AppState& state)
     DrawWire(360,y,430,y);
     DrawGNDPin(430,y,"GND pins");
 
-    if(state.circuitActive)
-        ; // GPIO-output: gpio->setLED(0, state.rcLedOn);
+    std::vector<std::string> gpioLabels;
+    for(auto& p : controllablePins) gpioLabels.push_back(p.label);
+
+    static Dropdown gpioDropdown(100, 350, 120, 30, gpioLabels);
+    gpioDropdown.Draw();
+    gpioDropdown.CheckClick();
+    //int selectedPin = std::stoi(gpioDropdown.GetSelectedItem());
+    int selectedIndex = gpioDropdown.GetSelectedIndex();
+    int selectedPin = controllablePins[selectedIndex].pin; // riktig BCM GPIO
+
+    // --- Knapp för LED ---
+    static Button* ledButton = nullptr; // skapa knappen första gången
+    if(!ledButton)
+    {
+        ledButton = new Button(480, y - 15, 150, 30, "Toggle LED");
+        ledButton->SetColor(BLUE);
+        ledButton->SetColorHover(PINK);
+        ledButton->SetOnClick([&state](){ state.rcLedOn = !state.rcLedOn; });
+    }
+
+    ledButton->Draw();
+    ledButton->CheckClick();
+
+    // --- Uppdatera GPIO ---
+    if(gpio)
+    {   
+        //int selectedPin = std::stoi(gpioDropdown.GetSelectedItem());
+        gpio->setLEDPin(selectedPin,state.rcLedOn); // LED på Raspberry Pi eller DummyGPIO
+    }
 
 }
 

@@ -35,7 +35,7 @@ void Update(AppState& state,float dt){
         case 2: state.HandlePotSlider();break;
     }
 }
-void DrawUI(AppState& state,Button& basicBtn,Button& midbtn,Button& fullbtn,Button& activate,Button& ledBtn){
+void DrawUI(AppState& state,Button& basicBtn,Button& midbtn,Button& fullbtn,Button& activate/*,Button& ledBtn*/){
     DrawText(TextFormat("Level: %i",state.circuitLevel),20,60,20,GRAY);
     basicBtn.Draw();
     midbtn.Draw();
@@ -47,10 +47,10 @@ void DrawUI(AppState& state,Button& basicBtn,Button& midbtn,Button& fullbtn,Butt
     fullbtn.CheckClick();
     activate.CheckClick();
 
-    if(state.currentPage == 0 && state.circuitLevel == 1){
+    /* if(state.currentPage == 0 && state.circuitLevel == 1){
         ledBtn.Draw();
         ledBtn.CheckClick();
-    }
+    } */
 }
 
 int main(){
@@ -83,12 +83,12 @@ int main(){
     activate.SetColor(YELLOW);
     activate.SetColorHover(ORANGE);
 
-    Button ledBtn(350,400,130,40,"Toggle LED");
+    //Button ledBtn(350,400,130,40,"Toggle LED");
 
-    ledBtn.SetOnClick([&](){
-        if(!state.circuitActive)
-            state.ledState = !state.ledState;
-    });
+    //ledBtn.SetOnClick([&](){
+    //    if(!state.circuitActive)
+    //        state.ledState = !state.ledState;
+    //});
 
     bool showGPIOPanel = false;
 
@@ -157,7 +157,7 @@ int main(){
         
             bool ledToDraw = (state.currentPage == 1 && state.circuitLevel >= 1) ? state.rcLedOn : state.ledState;
             DrawCircuit(state.currentPage, state.circuitLevel, state.circuitActive, ledToDraw,state.potValue,gpio,state);
-            DrawUI(state,basicBtn,midBtn,fullBtn,activate,ledBtn);
+            DrawUI(state,basicBtn,midBtn,fullBtn,activate/*,ledBtn*/);
 
         }
 

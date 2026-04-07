@@ -30,6 +30,7 @@ add_executable(${PROJECT_NAME}
     src/Circuits/Circuit3.cpp
     src/AppState
     src/Circuits/CircuitUnderConstruction.cpp
+    src/UI/Dropdown.cpp
 )
 
 # Länka Raylib

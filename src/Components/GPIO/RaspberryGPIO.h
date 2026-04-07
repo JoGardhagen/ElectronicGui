@@ -20,4 +20,9 @@ public:
     bool readButton(int pin) override {
         return gpioRead(pin) == 1;
     }
+    void GPIO::setLEDPin(int pin, bool on)
+    {
+        // t.ex. med wiringPi eller pigpio
+        digitalWrite(pin, on ? HIGH : LOW);
+    }
 };
