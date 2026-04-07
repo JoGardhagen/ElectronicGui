@@ -57,11 +57,6 @@ int main(){
     IGPIO* gpio = CreateGPIO();
     AppState state;
     state.currentPage = -1;
-    //state.circuitLevel = 0;
-    //state.cap1Voltage = 0.0f;
-    //state.cap2Voltage = 0.0f;
-    //state.charging = true;
-    //state.potValue = 0.1f;
 
     float dt = 1.0f / 60;
 
