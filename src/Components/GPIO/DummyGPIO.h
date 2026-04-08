@@ -10,6 +10,6 @@ public:
     }
 
     void setLEDPin(int pin, bool on) override {
-        std::cout << "DummyGPIO: LED on pin " << pin << " is " << (on ? "ON" : "OFF") << std::endl;
+        std::cout << "DummyGPIO: LED on GPIO_pin " << pin << " is " << (on ? "ON" : "OFF") << std::endl;
     }
 };

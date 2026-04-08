@@ -22,8 +22,8 @@ void DrawCircuitUnderConstruction()
                       {(float)lx + 40, (float)baseY + 100},
                       BLACK);
 
-    DrawRectangle(lx - 30, baseY + 40, 60, 10, WHITE);
-    DrawRectangle(lx - 25, baseY + 70, 50, 10, WHITE);
+    DrawRectangle(lx - 30, baseY + 40, 60, 10, RAYWHITE);
+    DrawRectangle(lx - 25, baseY + 70, 50, 10, RAYWHITE);
 
     DrawTriangle({(float)rx, (float)baseY},
                  {(float)rx - 40, (float)baseY + 100},

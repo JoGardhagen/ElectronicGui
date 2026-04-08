@@ -17,8 +17,10 @@ public:
 
     Dropdown(float x, float y, float width, float height, const std::vector<std::string>& _items);
 
-    void Draw();
+    void DrawButtonOnly();  // rita bara knappen
+    void DrawListOnly();    // rita endast listan ovanpå allt annat
     void CheckClick();
+    //void CheckClick();
 
     int GetSelectedIndex();
     std::string GetSelectedItem();

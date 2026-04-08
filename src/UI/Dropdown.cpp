@@ -5,25 +5,32 @@ Dropdown::Dropdown(float x, float y, float width, float height, const std::vecto
     : items(_items)
 {
     box = { x, y, width, height };
-    maxVisible = 6; // max antal synliga items
+    maxVisible = 6;
     scrollOffset = 0;
+    selectedIndex = -1;
 }
 
-void Dropdown::Draw() {
-    // rita huvudbox
+// Rita bara huvudknappen (utan listan)
+void Dropdown::DrawButtonOnly() {
     DrawRectangleRec(box, GRAY);
-    DrawText(items[selectedIndex].c_str(), box.x + 5, box.y + 5, 20, BLACK);
+     if(selectedIndex >= 0 && selectedIndex < items.size()) {
+        DrawText(items[selectedIndex].c_str(), box.x + 5, box.y + 5, 20, BLACK);
+    } else {
+        DrawText("Select", box.x + 5, box.y + 5, 20, DARKGRAY); // placeholder
+    }
+}
 
-    // rita dropdown om den är öppen
-    if(open) {
-        int start = scrollOffset;
-        int end = std::min(scrollOffset + maxVisible, (int)items.size());
+// Rita endast listan ovanpå allt annat
+void Dropdown::DrawListOnly() {
+    if(!open) return;
 
-        for(int i = start; i < end; i++) {
-            Rectangle r = { box.x, box.y + box.height * (i - scrollOffset + 1), box.width, box.height };
-            DrawRectangleRec(r, LIGHTGRAY);
-            DrawText(items[i].c_str(), r.x + 5, r.y + 5, 20, BLACK);
-        }
+    int start = scrollOffset;
+    int end = std::min(scrollOffset + maxVisible, (int)items.size());
+
+    for(int i = start; i < end; i++) {
+        Rectangle r = { box.x, box.y + box.height * (i - scrollOffset + 1), box.width, box.height };
+        DrawRectangleRec(r, LIGHTGRAY);
+        DrawText(items[i].c_str(), r.x + 5, r.y + 5, 20, BLACK);
     }
 }
 
