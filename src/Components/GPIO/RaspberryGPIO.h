@@ -1,28 +1,20 @@
-// src/Components/GPIO/RaspberryGPIO.h
 #pragma once
 #include "IGPIO.h"
-#include <pigpio.h>
-#include <iostream>
+#include <gpiod.h>
+#include <map>
+#include <string>
 
 class RaspberryGPIO : public IGPIO {
 public:
-    RaspberryGPIO() {
-        if(gpioInitialise() < 0)
-            std::cerr << "GPIO init failed" << std::endl;
-    }
+    RaspberryGPIO(const std::string& chipname = "gpiochip0");
+    ~RaspberryGPIO();
 
-    ~RaspberryGPIO() { gpioTerminate(); }
+    void setLED(bool on) override;
+    void setLEDPin(int pin, bool on) override;
 
-    void setLED(bool on) override {
-        gpioWrite(17, on ? 1 : 0); // GPIO17 exempel
-    }
+private:
+    gpiod_chip* chip = nullptr;
 
-    bool readButton(int pin) override {
-        return gpioRead(pin) == 1;
-    }
-    void GPIO::setLEDPin(int pin, bool on)
-    {
-        // t.ex. med wiringPi eller pigpio
-        digitalWrite(pin, on ? HIGH : LOW);
-    }
+    // Spara requests per pin
+    std::map<int, gpiod_line_request*> requests;
 };
