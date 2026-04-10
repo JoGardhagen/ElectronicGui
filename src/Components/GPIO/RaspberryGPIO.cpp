@@ -29,7 +29,8 @@ void RaspberryGPIO::setLEDPin(int pin, bool on) {
         gpiod_line_settings_set_direction(settings, GPIOD_LINE_DIRECTION_OUTPUT);
 
         gpiod_line_config* config = gpiod_line_config_new();
-        gpiod_line_config_add_line_settings(config, &pin, 1, settings);
+        unsigned int offset = pin;
+        gpiod_line_config_add_line_settings(config, &offset, 1, settings);
 
         gpiod_request_config* req_cfg = gpiod_request_config_new();
         gpiod_request_config_set_consumer(req_cfg, "ElectronicGui");
