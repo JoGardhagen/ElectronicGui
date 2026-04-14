@@ -1,17 +1,24 @@
 #include "Circuits.h"
 
 // forward declarations
+// Circuit 1
 void DrawCircuit1_Basic(bool ,IGPIO* gpio);
 void DrawCircuit1_Mid(AppState& state,IGPIO* gpio);
 void DrawCircuit1_Full(AppState& state, IGPIO* gpio);
 
+// Circuit 2
 void DrawCircuit2_Basic();
 void DrawCircuit2_Mid(bool ledOn);
 void DrawCircuit2_Full(bool ledOn);
 
+// Circuit 3
 void DrawCircuit3_Basic(float potValue); 
 void DrawCircuit3_Mid(float potValue);
 void DrawCirciut3_Full(float potValue);
+
+// Circuit 4
+void DrawCircuit4_Basic();
+void DrawCircuit4_Mid(AppState& state, IGPIO* gpio);
 
 void DrawCircuitUnderConstruction();
 
@@ -29,9 +36,8 @@ void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue
             break;
 
         case 1:
-            if(level==0) DrawCircuit2_Basic();
-            if(level==1) DrawCircuit2_Mid(ledState);
-            if(level==2) DrawCircuit2_Full(ledState);
+            if(level == 0)DrawCircuit4_Basic();
+            if(level == 1)DrawCircuit4_Mid(state,gpio);
             break;
 
         case 2:
@@ -42,7 +48,10 @@ void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue
 
         case 3:
            // DrawCircuit4();
-            if(level==0 || level==1 || level==2)DrawCircuitUnderConstruction();
+            if(level==0) DrawCircuit2_Basic();
+            if(level==1) DrawCircuit2_Mid(ledState);
+            if(level==2) DrawCircuit2_Full(ledState);
+            //if(level==0 || level==1 || level==2)DrawCircuitUnderConstruction();
             break;
 
         case 4:

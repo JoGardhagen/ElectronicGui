@@ -29,8 +29,7 @@ void RaspberryGPIO::setLEDPin(int pin, bool on) {
         gpiod_line_settings_set_direction(settings, GPIOD_LINE_DIRECTION_OUTPUT);
 
         gpiod_line_config* config = gpiod_line_config_new();
-        unsigned int offset = pin;
-        gpiod_line_config_add_line_settings(config, &offset, 1, settings);
+        gpiod_line_config_add_line_settings(config, &pin, 1, settings);
 
         gpiod_request_config* req_cfg = gpiod_request_config_new();
         gpiod_request_config_set_consumer(req_cfg, "ElectronicGui");
@@ -56,4 +55,14 @@ void RaspberryGPIO::setLEDPin(int pin, bool on) {
         pin,
         on ? GPIOD_LINE_VALUE_ACTIVE : GPIOD_LINE_VALUE_INACTIVE
     );
+}
+void RaspberryGPIO::setInputPin(int pin, bool value)
+{
+    // i riktiga system skulle detta komma från polling
+    inputCache[pin] = value;
+}
+
+bool RaspberryGPIO::getInputPin(int pin)
+{
+    return inputCache[pin];
 }

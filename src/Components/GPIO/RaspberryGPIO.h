@@ -6,7 +6,7 @@
 
 class RaspberryGPIO : public IGPIO {
 public:
-    RaspberryGPIO(const std::string& chipname = "/dev/gpiochip0");
+    RaspberryGPIO(const std::string& chipname = "gpiochip0");
     ~RaspberryGPIO();
 
     void setLED(bool on) override;

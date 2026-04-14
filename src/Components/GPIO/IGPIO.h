@@ -7,4 +7,8 @@ public:
     virtual void setLED(bool on) = 0;
     virtual void setLEDPin(int pin, bool on) = 0;
     //virtual bool readButton(int pin) = 0;
+
+    virtual void setInputPin(int pin,bool value) = 0;
+    virtual bool getInputPin(int pin) = 0;
+
 };

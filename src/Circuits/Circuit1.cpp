@@ -9,7 +9,6 @@
 #include "../UI/Dropdown.h"
 #include "../Components/GPIO/PinMap.h"
 #include <algorithm>
-#include <iostream>
 
 static bool ledState[4] = {false, false, false, false};
 
@@ -89,9 +88,6 @@ void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
     // --- Uppdatera GPIO ---
     if(gpio)
     {   
-        std::cout<<"jag kommer hit"<<std::endl;
-        std::cout<<"selected pin is :"<<selectedPin<<std::endl;
-        //std::cout<<"state: "<<state<<std::endl
         //int selectedPin = std::stoi(gpioDropdown.GetSelectedItem());
         gpio->setLEDPin(selectedPin,state.rcLedOn); // LED på Raspberry Pi eller DummyGPIO
     }
