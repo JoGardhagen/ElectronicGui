@@ -6,15 +6,20 @@
 
 class RaspberryGPIO : public IGPIO {
 public:
-    RaspberryGPIO(const std::string& chipname = "gpiochip0");
+    RaspberryGPIO(const std::string& chipname = "/dev/gpiochip0");
     ~RaspberryGPIO();
 
     void setLED(bool on) override;
     void setLEDPin(int pin, bool on) override;
 
+    void setInputPin(int pin, bool value) override;
+    bool getInputPin(int pin) override;
+
 private:
     gpiod_chip* chip = nullptr;
 
-    // Spara requests per pin
-    std::map<int, gpiod_line_request*> requests;
+    std::map<int, gpiod_line_request*> inputRequests;
+    std::map<int, gpiod_line_request*> outputRequests;
+
+    std::map<int, bool> inputCache;
 };

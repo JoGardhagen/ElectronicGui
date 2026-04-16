@@ -9,7 +9,7 @@
 #include "../UI/Dropdown.h"
 #include "../Components/GPIO/PinMap.h"
 #include <algorithm>
-
+#include <iostream>
 static bool ledState[4] = {false, false, false, false};
 
 void DrawCircuit1_Basic(bool active,IGPIO* gpio)
@@ -84,6 +84,10 @@ void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
 
     ledButton->Draw();
     ledButton->CheckClick();
+    //för felsök
+    std::cout << "GPIO ptr = " << gpio << std::endl;
+    std::cout << "selectedPin = " << selectedPin << std::endl;
+    std::cout << "led state = " << state.rcLedOn << std::endl;
 
     // --- Uppdatera GPIO ---
     if(gpio)

@@ -18,6 +18,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 IGPIO* CreateGPIO()
 {
@@ -26,6 +27,7 @@ IGPIO* CreateGPIO()
     #else
         return new DummyGPIO();
     #endif
+
 }
 
 void Update(AppState& state,float dt){
@@ -55,6 +57,7 @@ void DrawUI(AppState& state,Button& basicBtn,Button& midbtn,Button& fullbtn,Butt
 
 int main(){
     IGPIO* gpio = CreateGPIO();
+    std::cout<<typeid(*gpio).name()<<std::endl;
     AppState state;
     state.currentPage = -1;
 

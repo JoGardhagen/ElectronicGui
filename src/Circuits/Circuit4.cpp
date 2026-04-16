@@ -65,7 +65,6 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
             gpioLabels.push_back(p.label);
     }
 
-
     static Dropdown inputDropdown(500, y-20, 140, 30, gpioLabels);
     static Dropdown outputDropdown(500, y + 80, 140, 30, gpioLabels);
 
@@ -86,9 +85,6 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
     if (outIdx >= 0 && outIdx < controllablePins.size())
         outputPin = controllablePins[outIdx].pin;
 
-    // =========================
-    // 🔵 INPUT RAD
-    // =========================
     std::string inLabel = (inputPin != -1) ?
         "Pin " + std::to_string(inputPin) : "Select pin";
 
@@ -112,9 +108,6 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
 
     DrawGPIOPin(420, y, "GPIO IN", inLabel);
 
-    // =========================
-    // 🔴 OUTPUT RAD
-    // =========================
     std::string outLabel = (outputPin != -1) ?
         "Pin " + std::to_string(outputPin) : "Select pin";
 
@@ -124,23 +117,24 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
     DrawResistor(200, y + 100, "R330", "330 Ohm");
     DrawWire(260, y + 100, 300, y + 100);
 
+    DrawWire(340, y + 100, 420, y + 100);
+    DrawGNDPin(420, y + 100, "GND");
+
     bool signal = switchClosed;
+
+    #ifdef PLATFORM_RPI
+    if (gpio && inputPin != -1)
+    {
+        signal = gpio->getInputPin(inputPin);
+    }
+    #endif
 
     DrawLED(300, y + 100, signal, "LED");
 
-    DrawWire(340, y + 100, 420, y + 100);
-
-    DrawGNDPin(420, y + 100, "GND");
-
-    // =========================
-    // ⚡ GPIO LOGIK
-    // =========================
-    if (gpio && inputPin != -1)
-        gpio->setInputPin(inputPin, switchClosed);
-
     if (gpio && outputPin != -1)
+    {
         gpio->setLEDPin(outputPin, signal);
-
+    }
 
     inputDropdown.DrawListOnly();
     outputDropdown.DrawListOnly();
