@@ -47,8 +47,7 @@ TransistorPins DrawNPNTransistor(int x, int y, bool active, const std::string& l
     DrawLine(eMid.x, eMid.y, emitterEnd.x, emitterEnd.y, BLACK); // Vertikal linje
 
     // PIL PÅ DEN DIAGONALA EMITTERLINJEN (NPN)
-    //Vector2 arrowStart = { x, y + 5 };
-    Vector2 arrowStart = { static_cast<float>(x), static_cast<float>(y + 5) };
+    Vector2 arrowStart = { x, y + 5 };
     Vector2 arrowEnd = { eMid.x, eMid.y };
     DrawArrow(arrowStart, arrowEnd, BLACK);
 
@@ -86,8 +85,7 @@ TransistorPins DrawPNPTransistor(int x, int y, bool active, const std::string& l
 
     // PIL PÅ DEN DIAGONALA EMITTERLINJEN (PNP)
     Vector2 arrowStart = { eMid.x, eMid.y };
-    //Vector2 arrowEnd = { x, y + 5 };
-    Vector2 arrowEnd = { static_cast<float>(x), static_cast<float>(y + 5) };
+    Vector2 arrowEnd = { x, y + 5 };
     DrawArrow(arrowStart, arrowEnd, BLACK);
 
     Rectangle bounds = {(float)x, (float)(y - 20), 60.0f, 50.0f};
