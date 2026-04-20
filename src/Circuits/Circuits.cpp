@@ -23,6 +23,9 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio);
 //Circuit 5
 void DrawCircuit5_Basic(AppState& state, IGPIO* gpio);
 
+//Circuit 6
+void DrawCircuit6_Basic(AppState& state, IGPIO* gpio);
+
 void DrawCircuitUnderConstruction();
 
 
@@ -41,6 +44,7 @@ void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue
         case 1:
             if(level == 0)DrawCircuit4_Basic();
             if(level == 1)DrawCircuit4_Mid(state,gpio);
+            if(level==2)DrawCircuitUnderConstruction();
             break;
 
         case 2:
@@ -65,7 +69,8 @@ void DrawCircuit(int circuit, int level,bool active,bool ledState,float potValue
 
         case 5:
            // DrawCircuit6();
-            if(level==0 || level==1 || level==2)DrawCircuitUnderConstruction();
+            if(level == 0) DrawCircuit6_Basic(state,gpio);
+            if( level==1 || level==2)DrawCircuitUnderConstruction();
             break;
     }
 }

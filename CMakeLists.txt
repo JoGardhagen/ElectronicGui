@@ -37,12 +37,14 @@ add_executable(${PROJECT_NAME}
     src/Components/Wire.cpp
     src/Components/Spst.cpp
     src/Components/Transistor.cpp
+    src/Components/IC.cpp
 
     src/Circuits/Circuit1.cpp
     src/Circuits/Circuit2.cpp
     src/Circuits/Circuit3.cpp
     src/Circuits/Circuit4.cpp
     src/Circuits/Circuit5.cpp
+    src/Circuits/Circuit6.cpp
     src/Circuits/CircuitUnderConstruction.cpp
 
     src/UI/Dropdown.cpp

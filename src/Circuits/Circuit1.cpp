@@ -52,7 +52,7 @@ void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
 {
     DrawText("Circuit 1 - MID",20,20,30,BLACK);
     int y = 250;
-    DrawGPIOPin(120,y,"GPIO ","Pin 1 eller 17");
+    //DrawGPIOPin(120,y,"GPIO ","Pin 1 eller 17");
     DrawWire(128,y,200,y);
     DrawResistor(200,y,"R330","330 OHM resistor");
     DrawWire(260,y,320,y);
@@ -69,9 +69,19 @@ void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
     gpioDropdown.DrawButtonOnly();
     gpioDropdown.CheckClick();
     //int selectedPin = std::stoi(gpioDropdown.GetSelectedItem());
-    int selectedIndex = gpioDropdown.GetSelectedIndex();
-    int selectedPin = controllablePins[selectedIndex].pin; // riktig BCM GPIO
+    std::string tooltipText = "Select";
 
+    //int outIx = gpioDropdown.getSelectedIndex()
+    int selectedPin;
+
+    int selectedIndex = gpioDropdown.GetSelectedIndex();
+    if(selectedIndex>=0 && selectedIndex < controllablePins.size()){
+        
+        /* int */ selectedPin = controllablePins[selectedIndex].pin; // riktig BCM GPIO
+        tooltipText = "Pin" + std::to_string(selectedPin);
+        //return selectedPin;
+    }
+    DrawGPIOPin(120,y,"GPIO ",tooltipText);
     // --- Knapp för LED ---
     static Button* ledButton = nullptr; // skapa knappen första gången
     if(!ledButton)
@@ -86,7 +96,7 @@ void DrawCircuit1_Mid(AppState& state, IGPIO* gpio)
     ledButton->CheckClick();
     //för felsök
     std::cout << "GPIO ptr = " << gpio << std::endl;
-    std::cout << "selectedPin = " << selectedPin << std::endl;
+    //std::cout << "selectedPin = " << selectedPin << std::endl;
     std::cout << "led state = " << state.rcLedOn << std::endl;
 
     // --- Uppdatera GPIO ---
@@ -117,7 +127,7 @@ void DrawCircuit1_Full(AppState& state, IGPIO* gpio)
     {
         int y = 150 + i * ledSpacingY;
 
-        DrawGPIOPin(startX - 120, y, "GPIO +V" + std::to_string(i+1), "Pin GPIO");
+        DrawGPIOPin(startX - 120, y, "GPIO" + std::to_string(i+1), "Pin GPIO");
         DrawWire(startX - 112, y, startX - 40, y);
         DrawResistor(startX - 40, y, "R330", "330 Ohm resistor");
         DrawWire(startX+20, y, startX + 40, y);
