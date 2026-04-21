@@ -4,6 +4,7 @@ struct AppState
 {
     bool circuitActive = false;
     bool ledState = false;
+    float timer = 0.0f;
 
     int currentPage = -1;
     int circuitLevel = 0;

@@ -33,7 +33,8 @@ IGPIO* CreateGPIO()
 void Update(AppState& state,float dt){
     switch (state.currentPage)
     {
-        case 1: state.UpdateCircuit(dt);break;
+        case 1:
+        case 5: state.UpdateCircuit(dt);break;
         case 2: state.HandlePotSlider();break;
     }
 }

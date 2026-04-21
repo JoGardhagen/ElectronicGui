@@ -16,6 +16,7 @@
 
 void DrawCircuit6_Basic(AppState& state, IGPIO* gpio){
     DrawText("Circuit 6 - 555 Timer", 20, 20, 30, BLACK);
+    //static Button myBtn(600, 50, 150, 40, "START/STOP");
     
     // Skapa beskrivningar för 555-timer pinnar
     std::map<int, ICPinDescription> pinDescs555 = {
@@ -99,7 +100,9 @@ void DrawCircuit6_Basic(AppState& state, IGPIO* gpio){
     DrawResistor(OutPin.x-110,OutPin.y+100,"R220","220 Ohm Resistor");
     DrawWire(OutPin.x-110,OutPin.y+100,OutPin.x-140,OutPin.y+100);
 
-    DrawLED(OutPin.x-160,OutPin.y+100,false,"Lysdiod");
+    
+
+    DrawLED(OutPin.x-160,OutPin.y+100,state.ledState,"Lysdiod");
 
     DrawWire(OutPin.x-160,OutPin.y+100,100,OutPin.y+100);
     DrawWire(100,OutPin.y+100,100,IcGndPin.y);

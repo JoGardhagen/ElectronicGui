@@ -1,8 +1,25 @@
 #include "AppState.h"
 #include <raylib.h>
+#include <cmath>
 
 void AppState::UpdateCircuit(float dt)
-{
+{   
+    if(currentPage == 5) {
+        if(circuitActive) {
+            // Här skapar vi själva blinket
+            timer += dt; 
+            
+            // Om timern gått mer än 0.5 sekunder, tänd!
+            // fmod är bara ett sätt att få den att slå av/på varje sekund
+            if(fmod(timer, 1.0f) < 0.5f) {
+                ledState = true;
+            } else {
+                ledState = false;
+            }
+        } else {
+            ledState = false; // Släck om vi inte tryckt på Activate
+        }
+    }
     if(currentPage != 1) return;
     if(circuitLevel == 1){ // MID, 1 kondensator
         if(circuitActive){
