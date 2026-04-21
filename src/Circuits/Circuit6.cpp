@@ -47,10 +47,25 @@ void DrawCircuit6_Basic(AppState& state, IGPIO* gpio){
     DrawWire(410,VccPin.y,VccPin.x,VccPin.y);
     //====================
 
-
-    DrawResistor(VccPin.x-60,VccPin.y-70,"R1","10k Ohm resistor");
+    //==========R1
+    DrawResistor(VccPin.x+60,VccPin.y-30,"R1","10k Ohm resistor");
+    DrawWire(VccPin.x,VccPin.y,VccPin.x+50,VccPin.y);
+    DrawWire(VccPin.x+50,VccPin.y,VccPin.x+50,VccPin.y-30);
+    DrawWire(VccPin.x+50,VccPin.y-30,VccPin.x+60,VccPin.y-30);
+    DrawWire(VccPin.x+120,VccPin.y-30,VccPin.x+140,VccPin.y-30);
+    Vector2 DisPin = ic555.pins[6];
+    DrawWire(VccPin.x+140,VccPin.y-30,VccPin.x+140,DisPin.y);
+    DrawWire(VccPin.x+140,DisPin.y,DisPin.x,DisPin.y);
     
-    DrawResistor(VccPin.x-140,VccPin.y-70,"R2","100k Ohm resistor");
+    //=============R2
+    DrawResistor(DisPin.x+160,DisPin.y-30,"R2","100k Ohm resistor");
+    DrawWire(DisPin.x+140,DisPin.y,DisPin.x+150,DisPin.y);
+    DrawWire(DisPin.x+150,DisPin.y,DisPin.x+150,DisPin.y-30);
+    DrawWire(DisPin.x+150,DisPin.y-30,DisPin.x+160,DisPin.y-30);
+    DrawWire(DisPin.x+220,DisPin.y-30,DisPin.x+235,DisPin.y-30);
+    Vector2  CtlPin = ic555.pins[5];
+    DrawWire(DisPin.x+235,DisPin.y-30,DisPin.x+235,CtlPin.y);
+    DrawWire(DisPin.x+235,CtlPin.y,CtlPin.x,CtlPin.y);
     
 
     //DrawCapacitor(VccPin.x-200,VccPin.y+50,"C1","10uF Kondensator");
