@@ -45,7 +45,12 @@ void DrawCircuit6_Basic(AppState& state, IGPIO* gpio){
     DrawWire(100,VccPin.y-30,410,VccPin.y-30);
     DrawWire(410,VccPin.y-30,410,VccPin.y);
     DrawWire(410,VccPin.y,VccPin.x,VccPin.y);
-    //====================
+    //===========THR-From-vcc
+    Vector2 ThrPin = ic555.pins[3];
+    DrawWire(ThrPin.x,ThrPin.y,ThrPin.x-20,ThrPin.y);
+    DrawWire(ThrPin.x-20,ThrPin.y,ThrPin.x-20,ThrPin.y-60);
+    DrawWire(ThrPin.x-20,ThrPin.y-60,VccPin.x+10,ThrPin.y-60);
+    DrawWire(VccPin.x+10,ThrPin.y-60,VccPin.x+10,VccPin.y);
 
     //==========R1
     DrawResistor(VccPin.x+60,VccPin.y-30,"R1","10k Ohm resistor");
