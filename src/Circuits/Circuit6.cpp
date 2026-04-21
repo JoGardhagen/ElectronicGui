@@ -71,16 +71,38 @@ void DrawCircuit6_Basic(AppState& state, IGPIO* gpio){
     Vector2  CtlPin = ic555.pins[5];
     DrawWire(DisPin.x+235,DisPin.y-30,DisPin.x+235,CtlPin.y);
     DrawWire(DisPin.x+235,CtlPin.y,CtlPin.x,CtlPin.y);
-    
 
-    //DrawCapacitor(VccPin.x-200,VccPin.y+50,"C1","10uF Kondensator");
+    //============CTL-to-Trigg
+    Vector2 TriggPin = ic555.pins[1];
+    DrawWire(TriggPin.x,TriggPin.y,TriggPin.x-40,TriggPin.y);
+    DrawWire(TriggPin.x-40,TriggPin.y,TriggPin.x-40,TriggPin.y+50);
+    DrawWire(TriggPin.x-40,TriggPin.y+50,CtlPin.x+20,TriggPin.y+50);
+    DrawWire(CtlPin.x+20,TriggPin.y+50,CtlPin.x+20,CtlPin.y);
 
+    //=========CTL-CAP-GND
+    DrawWire(CtlPin.x+40,CtlPin.y,CtlPin.x+40,CtlPin.y+50);
+    DrawWire(CtlPin.x+40,CtlPin.y+50,CtlPin.x+20,CtlPin.y+50);
+    DrawWire(CtlPin.x+20,CtlPin.y+50,CtlPin.x+20,CtlPin.y+80);
+    DrawWire(CtlPin.x+20,CtlPin.y+80,CtlPin.x,CtlPin.y+80);
+    DrawCapacitor(CtlPin.x-30,CtlPin.y+80,"C","10uF Kondensator");
+    DrawWire(CtlPin.x-30,CtlPin.y+80,CtlPin.x-90,CtlPin.y+80);
+    DrawWire(CtlPin.x-90,CtlPin.y+80,CtlPin.x-90,IcGndPin.y);
 
+    //=====SignalOut-to-Led
     Vector2 OutPin = ic555.pins[2];
+    DrawWire(OutPin.x,OutPin.y,OutPin.x-50,OutPin.y);
+    DrawWire(OutPin.x-50,OutPin.y,OutPin.x-50,CtlPin.y+70);
+    DrawWire(OutPin.x-50,CtlPin.y+70,OutPin.x-40,CtlPin.y+70);
+    DrawWire(OutPin.x-40,CtlPin.y+70,OutPin.x-40,OutPin.y+100);
+    DrawWire(OutPin.x-40,OutPin.y+100,OutPin.x-50,OutPin.y+100);
 
     DrawResistor(OutPin.x-110,OutPin.y+100,"R220","220 Ohm Resistor");
+    DrawWire(OutPin.x-110,OutPin.y+100,OutPin.x-140,OutPin.y+100);
 
     DrawLED(OutPin.x-160,OutPin.y+100,false,"Lysdiod");
+
+    DrawWire(OutPin.x-160,OutPin.y+100,100,OutPin.y+100);
+    DrawWire(100,OutPin.y+100,100,IcGndPin.y);
 
 
 
