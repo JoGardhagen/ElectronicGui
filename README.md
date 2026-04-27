@@ -18,3 +18,8 @@ libasound2-dev libgl-dev libglu1-mesa-dev libwayland-dev \
 libxkbcommon-dev xwayland
 ```
 ## GPIOD
+
+```bash
+export DISPLAY=:0
+LIBGL_ALWAYS_SOFTWARE=1 ./Myproject
+```
