@@ -45,6 +45,7 @@ add_executable(${PROJECT_NAME}
     src/Circuits/Circuit4.cpp
     src/Circuits/Circuit5.cpp
     src/Circuits/Circuit6.cpp
+    src/Circuits/Circuit7.cpp
     src/Circuits/CircuitUnderConstruction.cpp
 
     src/UI/Dropdown.cpp

@@ -54,7 +54,7 @@ void DrawCircuit4_Basic()
 
 void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
 {
-    DrawText("Circuit 4 - SPST -> GPIO -> LED", 20, 20, 30, BLACK);
+    DrawText("Circuit 2 - SPST -> GPIO -> LED", 20, 20, 30, BLACK);
 
     int y = 250;
 
@@ -88,7 +88,7 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
     std::string inLabel = (inputPin != -1) ?
         "Pin " + std::to_string(inputPin) : "Select pin";
 
-    DrawGPIOPin(120, y, "GPIO IN", inLabel);
+    DrawGPIOPin(120, y, "GPIO 3.3v","pin 1 eller 17");
     DrawWire(128, y, 220, y);
 
     static bool switchClosed = false;
@@ -102,7 +102,15 @@ void DrawCircuit4_Mid(AppState& state, IGPIO* gpio)
             switchClosed = !switchClosed;
     }
 
-    DrawSwitch(290, y, switchClosed, 3.0f, "SPST");
+    DrawSwitch(290, y, switchClosed, 3.0f, "SPST || Button");
+
+    DrawWire(350,y,350,y-50);
+    DrawWire(350,y-50,370,y-50);
+    DrawResistor(370,y-50,"R10K","!- Pull-up 10k Ohm resistor -! ");
+    DrawWire(430,y-50,450,y-50);
+    DrawWire(450,y-50,450,y-150);
+    DrawWire(450,y-150,420,y-150);
+    DrawGNDPin(420, y - 150, "GND");
 
     DrawWire(320, y, 420, y);
 
