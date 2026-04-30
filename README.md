@@ -21,5 +21,5 @@ libxkbcommon-dev xwayland
 
 ```bash
 export DISPLAY=:0
-LIBGL_ALWAYS_SOFTWARE=1 ./Myproject
+LIBGL_ALWAYS_SOFTWARE=1 ./MyProject
 ```
