@@ -95,3 +95,58 @@ void DrawCircuit5_Basic(AppState& state, IGPIO* gpio)
 
     outputDropdown.DrawListOnly();
 }
+
+void DrawCircuit5_Mid(AppState& state, IGPIO* gpio){
+    DrawText("Circuit 5 -  AND-GATE ", 20, 20, 30, BLACK);
+
+    int y = 200;
+
+    static bool inputA = false; 
+    static bool inputB = false;
+
+    Rectangle buttonA = {500.0f, (float)y - 25.0f, 100.0f, 50.0f};
+    Rectangle buttonB = {650.0f, (float)y - 25.0f, 100.0f, 50.0f};
+
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        Vector2 m = GetMousePosition();
+
+        if (CheckCollisionPointRec(m, buttonA))
+            inputA = !inputA;
+
+        if (CheckCollisionPointRec(m, buttonB))
+            inputB = !inputB;
+    }
+
+    DrawRectangleRec(buttonA, inputA ? GREEN : RED);
+    DrawText("A", buttonA.x + 20, buttonA.y + 15, 20, BLACK);
+
+    DrawRectangleRec(buttonB, inputB ? GREEN : RED);
+    DrawText("B", buttonB.x + 20, buttonB.y + 15, 20, BLACK);
+
+    auto t1 = DrawNPNTransistor(300, y, inputB, "Q1", "NPN");
+    auto t2 = DrawNPNTransistor(300, y + 80, inputB, "Q2", "NPN");
+
+        // Q1 collector till LED-krets
+    DrawWire(t1.collector.x, t1.collector.y,
+             t1.collector.x, t1.collector.y - 50);
+
+    DrawGPIOPin(t1.collector.x, t1.collector.y - 50,"GPIO 3.3V","GPIO");    
+
+    // Q1 emitter till Q2 collector
+    DrawWire(t1.emitter.x, t1.emitter.y,
+             t2.collector.x, t2.collector.y);
+
+    // Q2 emitter till GND
+    DrawWire(t2.emitter.x, t2.emitter.y,
+             t2.emitter.x, t2.emitter.y + 30);
+    DrawWire(t2.emitter.x, t2.emitter.y + 30,t2.emitter.x+50,t2.emitter.y+30);
+    DrawLED(t2.emitter.x+50,t2.emitter.y+30,inputA && inputB,"LED");
+    DrawWire(t2.emitter.x+90,t2.emitter.y+30,t2.emitter.x+110,t2.emitter.y+30);
+    DrawResistor(t2.emitter.x+110,t2.emitter.y+30,"R330","Resistor 330 OHM");
+    DrawWire(t2.emitter.x+170,t2.emitter.y+30,t2.emitter.x+200,t2.emitter.y+30);
+    DrawGNDPin(t2.emitter.x+200,t2.emitter.y+30,"GND");
+
+    //DrawGPIOPin();
+    
+}
