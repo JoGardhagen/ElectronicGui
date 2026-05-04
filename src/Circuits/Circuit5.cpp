@@ -131,7 +131,14 @@ void DrawCircuit5_Mid(AppState& state, IGPIO* gpio){
     DrawWire(t1.collector.x, t1.collector.y,
              t1.collector.x, t1.collector.y - 50);
 
-    DrawGPIOPin(t1.collector.x, t1.collector.y - 50,"GPIO 3.3V","GPIO");    
+    //DrawGPIOPin(t1.collector.x, t1.collector.y - 50,"GPIO 3.3V","GPIO");    
+    DrawWire(t1.collector.x, t1.collector.y - 50,t1.collector.x+30, t1.collector.y - 50);
+    DrawLED(t1.collector.x+30, t1.collector.y - 50,inputA&&inputB,"LED");
+    DrawWire(t1.collector.x+70, t1.collector.y - 50,t1.collector.x+100, t1.collector.y - 50);
+    DrawResistor(t1.collector.x+100, t1.collector.y - 50,"R330","Resistor 330 OHM");
+    DrawWire(t1.collector.x+160, t1.collector.y - 50,t1.collector.x+190, t1.collector.y - 50);
+    DrawGPIOPin(t1.collector.x+190, t1.collector.y - 50,"GPIO 3.3V","GPIO VCC");
+    
 
     // Q1 emitter till Q2 collector
     DrawWire(t1.emitter.x, t1.emitter.y,
@@ -140,13 +147,32 @@ void DrawCircuit5_Mid(AppState& state, IGPIO* gpio){
     // Q2 emitter till GND
     DrawWire(t2.emitter.x, t2.emitter.y,
              t2.emitter.x, t2.emitter.y + 30);
-    DrawWire(t2.emitter.x, t2.emitter.y + 30,t2.emitter.x+50,t2.emitter.y+30);
-    DrawLED(t2.emitter.x+50,t2.emitter.y+30,inputA && inputB,"LED");
-    DrawWire(t2.emitter.x+90,t2.emitter.y+30,t2.emitter.x+110,t2.emitter.y+30);
-    DrawResistor(t2.emitter.x+110,t2.emitter.y+30,"R330","Resistor 330 OHM");
-    DrawWire(t2.emitter.x+170,t2.emitter.y+30,t2.emitter.x+200,t2.emitter.y+30);
-    DrawGNDPin(t2.emitter.x+200,t2.emitter.y+30,"GND");
 
-    //DrawGPIOPin();
+    DrawWire(t1.base.x,t1.base.y,t1.base.x-100,t1.base.y);
+
+    int outputPin = -1;
+
+    static std::vector<std::string> gpioLabels;
+    if (gpioLabels.empty())
+    {
+        for (auto& p : controllablePins)
+            gpioLabels.push_back(p.label);
+    }
+
+    static Dropdown outputDropdown(500, y+20  , 100, 30, gpioLabels);
+
+    outputDropdown.DrawButtonOnly();
+    outputDropdown.CheckClick();
+
+
+    int outIdx = outputDropdown.GetSelectedIndex();
+    if (outIdx >= 0 && outIdx < controllablePins.size())
+        outputPin = controllablePins[outIdx].pin;
+
+    std::string outLabel = (outputPin != -1) ?
+        "Pin " + std::to_string(outputPin) : "Select pin";
+
+    DrawGPIOPin(t1.base.x-100,t1.base.y,"GPIO",outLabel);
+    outputDropdown.DrawListOnly();
     
 }
